@@ -1,0 +1,202 @@
+kHelp on module rbg_game:
+
+NAME
+    rbg_game
+
+DESCRIPTION
+    rbg_game module contains a simple interface
+    to a compiled rbg game.
+    -----------------------
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        action_representation
+        game_state
+        move
+        resettable_bitarray_stack
+    
+    class action_representation(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      action_representation
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, /, *args, **kwargs)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |  
+     |  cell
+     |      The cell the rule should be applied at.
+     |  
+     |  index
+     |      The index of the rule to be applied.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |  
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+    
+    class game_state(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      game_state
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, /, *args, **kwargs)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  apply_any_move(...)
+     |      apply_any_move(self: rbg_game.game_state, arg0: rbg_game.resettable_bitarray_stack) -> bool
+     |  
+     |  apply_move(...)
+     |      apply_move(self: rbg_game.game_state, arg0: rbg_game.move) -> None
+     |  
+     |  apply_with_keeper(...)
+     |      apply_with_keeper(self: rbg_game.game_state, arg0: rbg_game.move, arg1: rbg_game.resettable_bitarray_stack) -> None
+     |  
+     |  copy(...)
+     |      copy(self: rbg_game.game_state) -> rbg_game.game_state
+     |      
+     |      Creates a copy of the current game_state.
+     |  
+     |  get_all_moves(...)
+     |      get_all_moves(self: rbg_game.game_state, arg0: rbg_game.resettable_bitarray_stack) -> List[rbg_game.move]
+     |  
+     |  get_current_cell(...)
+     |      get_current_cell(self: rbg_game.game_state) -> int
+     |      
+     |      Returns the cell the game_state points at.
+     |  
+     |  get_current_player(...)
+     |      get_current_player(self: rbg_game.game_state) -> int
+     |  
+     |  get_piece(...)
+     |      get_piece(self: rbg_game.game_state, arg0: int) -> int
+     |  
+     |  get_player_score(...)
+     |      get_player_score(self: rbg_game.game_state, arg0: int) -> int
+     |  
+     |  get_variable_value(...)
+     |      get_variable_value(self: rbg_game.game_state, arg0: int) -> int
+     |  
+     |  is_legal(...)
+     |      is_legal(self: rbg_game.game_state, arg0: rbg_game.move) -> bool
+     |  
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |  
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+    
+    class move(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      move
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, /, *args, **kwargs)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |  
+     |  mr
+     |  
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |  
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+    
+    class resettable_bitarray_stack(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      resettable_bitarray_stack
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(...)
+     |      __init__(self: rbg_game.resettable_bitarray_stack) -> None
+     |  
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |  
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+FUNCTIONS
+    action_to_modifier_index(...) method of builtins.PyCapsule instance
+        action_to_modifier_index(arg0: int) -> int
+    
+    board_cell_to_string(...) method of builtins.PyCapsule instance
+        board_cell_to_string(arg0: int) -> str
+        
+        Translates a board node to a string representation of it. Usually the string representation contains a humand readable description of what the node is in context of the game. For example for chess.rbg, rbg_game.board_cell_to_string(0) == 'rx0y0'
+    
+    board_degree(...) method of builtins.PyCapsule instance
+        board_degree() -> int
+    
+    board_size(...) method of builtins.PyCapsule instance
+        board_size() -> int
+        
+        Size of the board for the game. This is the number of nodes in the grap defining the board. The index of a node is a number from 0 to board_size - 1. (inclusive) For example for chess.rbg this would be 64.
+    
+    get_bound(...) method of builtins.PyCapsule instance
+        get_bound(arg0: int) -> int
+        
+        Returns the bound of the variable.
+    
+    get_neighbour(...) method of builtins.PyCapsule instance
+        get_neighbour(arg0: int, arg1: int) -> int
+        
+        Returns the next node of the board node, when applying the given edge.
+    
+    modifier_to_action_index(...) method of builtins.PyCapsule instance
+        modifier_to_action_index(arg0: int) -> int
+    
+    monotonic_classes(...) method of builtins.PyCapsule instance
+        monotonic_classes() -> int
+    
+    new_game_state(...) method of builtins.PyCapsule instance
+        new_game_state() -> rbg_game::game_state
+    
+    number_of_modifiers(...) method of builtins.PyCapsule instance
+        number_of_modifiers() -> int
+    
+    number_of_pieces(...) method of builtins.PyCapsule instance
+        number_of_pieces() -> int
+        
+        Number of pieces in the game. Pieces have numbers from 1 to this number. (inclusive)
+    
+    number_of_players(...) method of builtins.PyCapsule instance
+        number_of_players() -> int
+        
+        Number of players participating in the game. Players have numbers from 1 to this number-1. (inclusive) The keeper player has number 0. For example for chess.rbg this would be 3 (two players plus keeper).
+    
+    number_of_variables(...) method of builtins.PyCapsule instance
+        number_of_variables() -> int
+        
+        Number of variables in the game. Variables have numbers from 0 to this number-1. (inclusive)
+    
+    piece_to_string(...) method of builtins.PyCapsule instance
+        piece_to_string(arg0: int) -> str
+        
+        Translates a piece number to a string representation of it. For example for chess.rbg, rbg_game.piece_to_string(0) == 'blackBishop'
+    
+    variable_to_string(...) method of builtins.PyCapsule instance
+        variable_to_string(arg0: int) -> str
+        
+        Translates variables names to some meaningful name. For example for chess.rbg, rbg_game.variable_to_string(2) == 'blackKindMoved'.
+
+FILE
+    /home/domiko/Documents/uwr/sidrgp/rbgcpp2py/scripts/rbg_game.so
