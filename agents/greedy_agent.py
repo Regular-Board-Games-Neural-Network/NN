@@ -2,7 +2,7 @@ import torch
 import rbg_game
 import model_utilis
 
-class Agent:
+class GreedyAgent:
 
     def __init__(self):        
         

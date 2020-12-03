@@ -1,6 +1,6 @@
 import rbg_game
 
-class Agent:        
+class RandomAgent:        
 
     def choose_action(self, state, model):
         

@@ -1,17 +1,27 @@
 import rbg_game
-from agent import Agent
+from model import ResModel
 from tqdm import tqdm
 from game_utilis import *
+from model_utilis import *
+from agents.egreedy_agent import EgreedyAgent
+from agents.random_agent import RandomAgent
+
 
 rbs = rbg_game.resettable_bitarray_stack()
 n = rbg_game.board_size()
 
+#nn_player = Agent(alpha = 0.001,layer_size=(3, 3), num_of_layers=(66), 
+#                            num_of_res_layers=1, number_of_filters=256)
+
+model = ResModel(input_shape=(3, 3), num_layers=66, kernel_size=(3,3), 
+            num_of_res_layers=1, padding=(1, 1), 
+            number_of_filters=256)
+
+player_1 = EgreedyAgent(0.01)
+player_2 = RandomAgent()
+
 num_games = 10000
 nn_player_number = 2
-nn_player = Agent(alpha = 0.001,layer_size=(3, 3), num_of_layers=(66), 
-                            num_of_res_layers=1, number_of_filters=256)
-wins = 0
-draws = 0
 
 for game_number in tqdm(range(num_games)):
     
@@ -28,14 +38,4 @@ for game_number in tqdm(range(num_games)):
         else:
             random_move(game_state, rbs)
     
-    nn_player.agent_learn(game_state.get_player_score(nn_player_number) / 100)
-
-    if game_number >= num_games / 2:
-        if game_state.get_player_score(nn_player_number) == 100:
-            wins += 1
-        if game_state.get_player_score(nn_player_number) == 50:
-            draws += 1
-
-print('Wins=', wins)
-print('Draws=', draws)
-print('Wins+Draws=', wins + draws)
+    
