@@ -1,31 +1,36 @@
 import rbg_game
 from model import ResModel
 from tqdm import tqdm
+import torch.nn as nn
 from game_utilis import *
 from model_utilis import *
 from agents.egreedy_agent import EgreedyAgent
 from agents.random_agent import RandomAgent
-
+from learning_funcs import mt
+import gc
 
 rbs = rbg_game.resettable_bitarray_stack()
 n = rbg_game.board_size()
 
-#nn_player = Agent(alpha = 0.001,layer_size=(3, 3), num_of_layers=(66), 
-#                            num_of_res_layers=1, number_of_filters=256)
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+model_alpha = 0.001
 model = ResModel(input_shape=(3, 3), num_layers=66, kernel_size=(3,3), 
             num_of_res_layers=1, padding=(1, 1), 
-            number_of_filters=256)
+            number_of_filters=256).to(device)
+optimizer = torch.optim.Adam(model.parameters(), lr=model_alpha)
+criterion = nn.MSELoss()
 
-player_1 = EgreedyAgent(0.01)
+player_1 = EgreedyAgent(e_value = 0.01)
 player_2 = RandomAgent()
 
-num_games = 10000
-nn_player_number = 2
+num_games = 1
+nn_player_number = 1
 
 for game_number in tqdm(range(num_games)):
     
     game_state = rbg_game.new_game_state()
+    moves_history = []
 
     while True:
         
@@ -33,9 +38,20 @@ for game_number in tqdm(range(num_games)):
             break
 
         if game_state.get_current_player() == nn_player_number:
-            move = nn_player.choose_action(game_state)
-            make_move(game_state, move, rbs)
+            move_rbs, move_value = player_1.choose_action(game_state, model)
+            make_move(game_state, move_rbs, rbs)
+            moves_history.append(move_value)
         else:
-            random_move(game_state, rbs)
+            move_rbs, move_value = player_2.choose_action(game_state)
+            make_move(game_state, move_rbs, rbs)
+
+    mt.learn_monte_carlo(model, optimizer, criterion, moves_history, 
+                                    game_state.get_player_score(1) / 100)
+
+    torch.cuda.empty_cache()
+    gc.collect()
     
+    
+
+
     

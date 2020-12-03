@@ -20,11 +20,12 @@ class EgreedyAgent:
             boardcp.apply_with_keeper(mv, rbs)
             boards.append(model_utilis.parse_game_state(boardcp))
 
+        
         values = model(torch.cat(boards, 0).to(self.device))
         
         if torch.rand(1) < self.e_value:
             id = torch.argmax(values)
         else:
-            id = torch.randperm(len(values))[:1]
+            id = torch.randperm(len(values))[:1][0]
 
         return moves[id], values[id]
