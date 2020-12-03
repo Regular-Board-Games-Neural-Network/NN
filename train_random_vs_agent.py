@@ -6,7 +6,7 @@ from game_utilis import *
 from model_utilis import *
 from agents.egreedy_agent import EgreedyAgent
 from agents.random_agent import RandomAgent
-from learning_funcs import mt
+from training_funcs import mt
 import gc
 
 rbs = rbg_game.resettable_bitarray_stack()
