@@ -1,7 +1,6 @@
 import rbg_game
 import torch
 import numpy as np
-from model2 import ResModel
 
 def parse_game_state(state):
 
