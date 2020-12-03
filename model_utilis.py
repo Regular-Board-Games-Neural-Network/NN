@@ -34,3 +34,12 @@ def parse_game_state(state):
         out[:, board_size + i, :, :] = submatrix
 
     return torch.tensor(out.astype(np.float32))
+
+
+def save_model(path, model, layer_size, num_of_layers, num_of_res_layers, number_of_filters):
+    torch.save(model, path + 'Resnet;{};{};{};{}'.format(
+        layer_size, num_of_input_layers, num_of_res_layers, number_of_filters))
+
+def load_model(path, model):
+    model.load_state_dict(torch.load(path))
+    return model
