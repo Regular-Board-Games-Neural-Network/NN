@@ -16,7 +16,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 model_alpha = 0.001
 model = ResModel(input_shape=(3, 3), num_layers=66, kernel_size=(3,3), 
-            num_of_res_layers=1, padding=(1, 1), 
+            num_of_res_layers=2, padding=(1, 1), 
             number_of_filters=256).to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=model_alpha)
 criterion = nn.MSELoss()
@@ -46,8 +46,9 @@ for game_number in tqdm(range(num_games)):
             make_move(game_state, move_rbs, rbs)
 
     mt.learn_monte_carlo(model, optimizer, criterion, moves_history, 
-                                    game_state.get_player_score(1) / 100)
+                                    game_state.get_player_score(nn_player_number) / 100)
 
+    save_model('', model, (3, 3), 66, 2, 256)
     torch.cuda.empty_cache()
     gc.collect()
     
