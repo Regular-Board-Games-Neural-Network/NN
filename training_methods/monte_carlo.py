@@ -8,7 +8,7 @@ class MonteCarlo:
                 self.optimizer = optimizer
                 self.criterion = criterions
 
-        def learn_monte_carlo(self, moves, result):
+        def learn(self, moves, result):
 
                 self.model.train()
                 self.model.zero_grad()
