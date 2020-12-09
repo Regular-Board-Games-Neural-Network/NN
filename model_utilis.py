@@ -35,9 +35,8 @@ def parse_game_state(state):
 
     return torch.tensor(out.astype(np.float32))
 
-def save_model(path, model, layer_size, num_of_input_layers, num_of_res_layers, number_of_filters):
-    torch.save(model.state_dict(), path + 'Resnet;{};{};{};{}'.format(
-        layer_size, num_of_input_layers, num_of_res_layers, number_of_filters))
+def save_model(path, game_name, model):
+    torch.save(model.state_dict(), 'MODEL {}'.format(game_name))
 
 def load_model(path, model):
     model.load_state_dict(torch.load(path))
