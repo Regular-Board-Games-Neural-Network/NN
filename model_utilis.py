@@ -38,6 +38,6 @@ def parse_game_state(state):
 def save_model(path, game_name, model):
     torch.save(model.state_dict(), 'MODEL {}'.format(game_name))
 
-def load_model(path, model):
-    model.load_state_dict(torch.load(path))
+def load_model(path, model, device):
+    model.load_state_dict(torch.load(path, map_location=device))
     return model
