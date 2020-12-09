@@ -6,31 +6,19 @@ import random
 
 class QLearning:
 
-    def __init__(self, policy_model, target_model, optimizer, 
-                            criterion, buffer_size, batch_size):
+    def __init__(self, model, optimizer, criterion):
 
-        self.buffer = deque(maxlen=buffer_size)
-        self.batch_size = batch_size
-
-        self.policy_model = policy_model
-        self.target_model = target_model
+        self.model = policy_model
         self.optimizer = optimizer
         self.criterion = criterion
 
-    def sample_buffer(self):
-        if len(self.buffer) <= self.batch_size:
-            return list(self.buffer)
-        else:
-            return list(random.sample(self.buffer, self.batch_size))
-
     def learn(self, moves, result):
 
+        transition = []
         for move in range(len(moves)-1):
-            self.buffer.append((moves[move], (moves[move+1] + 0).detach()))
+            transition.append((moves[move], (moves[move+1] + 0).detach()))
         
-        self.buffer.append((moves[-1], torch.tensor(0 + result).reshape(-1)))
-
-        train_sample = self.sample_buffer()
+        transition.append((moves[-1], torch.tensor(0 + result).reshape(-1)))
         
         target = [target for state, target in train_sample]
         state = [state for state, target in train_sample]
@@ -42,6 +30,5 @@ class QLearning:
 
         loss.backward()
         self.optimizer.step()
-    
-    def update(model):
-        pass
+
+        
