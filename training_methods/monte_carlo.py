@@ -6,14 +6,14 @@ class MonteCarlo:
 
                 self.model = model
                 self.optimizer = optimizer
-                self.criterion = criterions
+                self.criterion = criterion
 
         def learn(self, moves, result):
 
                 self.model.train()
                 self.model.zero_grad()
 
-                self.loss = criterion(
+                self.loss = self.criterion(
                         torch.stack(moves).reshape(-1, 1), 
                         torch.full((len(moves), 1), result))
 

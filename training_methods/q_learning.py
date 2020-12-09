@@ -1,8 +1,6 @@
 import torch
-from collections import deque
-import copy
 import numpy as np
-import random
+
 
 class QLearning:
 
@@ -23,8 +21,8 @@ class QLearning:
         target = [target for state, target in train_sample]
         state = [state for state, target in train_sample]
 
-        self.optimizer.zero_grad()
-        self.target_model.train()
+        self.model.zero_grad()
+        self.model.train()
 
         loss = self.criterion(torch.stack(target), torch.stack(state))
 
