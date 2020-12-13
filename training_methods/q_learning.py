@@ -1,12 +1,11 @@
 import torch
 import numpy as np
 
-
 class QLearning:
 
     def __init__(self, model, optimizer, criterion):
 
-        self.model = policy_model
+        self.model = model
         self.optimizer = optimizer
         self.criterion = criterion
 
@@ -18,8 +17,8 @@ class QLearning:
         
         transition.append((moves[-1], torch.tensor(0 + result).reshape(-1)))
         
-        target = [target for state, target in train_sample]
-        state = [state for state, target in train_sample]
+        target = [target for state, target in transition]
+        state = [state for state, target in transition]
 
         self.model.zero_grad()
         self.model.train()

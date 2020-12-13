@@ -1,15 +1,16 @@
-from test import test
+from train import train
 import torch
 import torch.nn as nn
 from models.resnet import ResModel
 from agents.egreedy_agent import EgreedyAgent
 from agents.greedy_agent import GreedyAgent
 from training_methods.monte_carlo import MonteCarlo
+from training_methods.q_learning import QLearning
 from model_utilis import *
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-'''
+
 model_alpha = 0.001
 model_1 = ResModel(input_shape=(3, 3), num_layers=66, kernel_size=(3,3), 
             num_of_res_layers=2, padding=(1, 1), 
@@ -26,8 +27,8 @@ optimizer_2 = torch.optim.Adam(model_2.parameters(), lr=model_alpha)
 criterion = nn.MSELoss()
 
 
-trainer_1 = MonteCarlo(model_1, optimizer_1, criterion)
-trainer_2 = MonteCarlo(model_2, optimizer_2, criterion)
+trainer_1 = QLearning(model_1, optimizer_1, criterion)
+trainer_2 = QLearning(model_2, optimizer_2, criterion)
 
 player_1 = EgreedyAgent(e_value = 0.01)
 player_2 = EgreedyAgent(e_value = 0.01)
@@ -55,3 +56,4 @@ player_2 = GreedyAgent()
 
 test({ 'model_1': model_1, 'player_1': player_1, 'model_2': model_2, 'player_2': player_2,
        'num_games': 30})
+'''
