@@ -50,4 +50,5 @@ def train(train_config):
         player_2_number, player_1_number = player_1_number, player_2_number
 
         if game_number % save_model_every_n_iterations== 0:
-            save_model(save_path, game_name, model_2)
+            save_model(save_path, game_name+'_model_1', model_1)
+            save_model(save_path, game_name+'_model_2', model_2)

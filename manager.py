@@ -11,18 +11,17 @@ from model_utilis import *
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-model_alpha = 0.001
-model_1 = ResModel(input_shape=(3, 3), num_layers=66, kernel_size=(3,3), 
-            num_of_res_layers=2, padding=(1, 1), 
-            number_of_filters=256).to(device)
+model_alpha_1 = 0.001
+model_1 = ResModel(input_shape=(3, 3), num_layers=66, 
+            num_of_res_layers=2, number_of_filters=256).to(device)
 
-optimizer_1 = torch.optim.Adam(model_1.parameters(), lr=model_alpha)
+optimizer_1 = torch.optim.Adam(model_1.parameters(), lr=model_alpha_1)
 
-model_2 = ResModel(input_shape=(3, 3), num_layers=66, kernel_size=(3,3), 
-            num_of_res_layers=2, padding=(1, 1), 
-            number_of_filters=256).to(device)
+model_alpha_2 = 0.001
+model_2 = ResModel(input_shape=(3, 3), num_layers=66, 
+            num_of_res_layers=2, number_of_filters=256).to(device)
 
-optimizer_2 = torch.optim.Adam(model_2.parameters(), lr=model_alpha)
+optimizer_2 = torch.optim.Adam(model_2.parameters(), lr=model_alpha_2)
 
 criterion = nn.MSELoss()
 

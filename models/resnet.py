@@ -37,10 +37,11 @@ class Res_block(nn.Module):
 
 class ResModel(nn.Module):
 
-    def __init__(self, input_shape, num_layers, kernel_size, 
-            num_of_res_layers, padding, number_of_filters):
+    def __init__(self, input_shape, num_layers, num_of_res_layers, number_of_filters):
         super(ResModel, self).__init__()
 
+        kernel_size = (3, 3)
+        padding = (1, 1)
 
         self.model = nn.Sequential()
         self.model.add_module('Conv Start', 
