@@ -13,7 +13,7 @@ def parse_game_state(state):
     pieces = rbg_game.number_of_pieces()
     variables = rbg_game.number_of_variables()
 
-    out = np.zeros((1, (board_size + variables), square_size, square_size))
+    parsed = np.zeros((1, (board_size + variables), square_size, square_size))
 
     for i in range(board_size):
         submatrix = np.ones(square_size * square_size) * -1
@@ -26,14 +26,14 @@ def parse_game_state(state):
                 submatrix[j + 1] = get_piece_val(neigh)
 
         submatrix = submatrix.reshape((square_size, square_size))
-        out[:, i, :, :] = submatrix
+        parsed[:, i, :, :] = submatrix
 
     for i in range(variables):
         val = state.get_variable_value(i) / rbg_game.get_bound(i)
         submatrix = np.ones((square_size, square_size)) * val
-        out[:, board_size + i, :, :] = submatrix
+        parsed[:, board_size + i, :, :] = submatrix
 
-    return torch.tensor(out.astype(np.float32))
+    return torch.tensor(parsed.astype(np.float32))
 
 def save_model(path, game_name, model):
     torch.save(model.state_dict(), 'MODEL {}'.format(game_name))

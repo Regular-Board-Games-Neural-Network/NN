@@ -46,5 +46,6 @@ def test(test_config):
         player_2_number, player_1_number = player_1_number, player_2_number
 
     print('Wins=', wins)
-    print('Draws=', wins)
-    print('Wins+Draws=', wins)
+    print('Draws=', draws)
+    print('Wins+Draws=', wins+draws)
+    print('Win+Draw rate=', (wins+draws) / num_games)

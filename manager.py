@@ -1,7 +1,7 @@
-from train import train
 import sys
 import torch
 import torch.nn as nn
+from train import train
 from models.resnet import ResModel
 from agents.egreedy_agent import EgreedyAgent
 from agents.greedy_agent import GreedyAgent
@@ -30,7 +30,6 @@ optimizer_2 = torch.optim.Adam(model_2.parameters(), lr=model_alpha_2)
 
 criterion = nn.MSELoss()
 
-
 trainer_1 = QLearning(model_1, optimizer_1, criterion)
 trainer_2 = QLearning(model_2, optimizer_2, criterion)
 
@@ -54,9 +53,6 @@ train({'trainer_1': trainer_1, 'model_1': model_1, 'player_1': player_1,
 '''
 Kolejność argumentów:
 model_alpha, input_shape, num_layers, num_of_res_layers, number_of_filters, agent, agent_ option, num_games, savae_model_every_n_iterations, game_name, save_path
-
-
-
 
 model_1 = ResModel(input_shape=(3, 3), num_layers=66, kernel_size=(3,3), 
             num_of_res_layers=2, padding=(1, 1), 
