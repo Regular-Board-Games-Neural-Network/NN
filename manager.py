@@ -6,41 +6,41 @@ from models.resnet import ResModel
 from agents.egreedy_agent import EgreedyAgent
 from agents.greedy_agent import GreedyAgent
 from training_methods.monte_carlo import MonteCarlo
-from training_methods.q_learning import QLearning
+from training_methods.minmax import MinMaxLearning
 from model_utilis import *
 
 n = len(sys.argv)
-if n != 12 and n != 11:
-	print("error: wrong number of arguments :(")
+if n != 10 and n != 9:
+	print("error: wrong number of arguments -- {0} :(".format(n))
 	exit()
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cpu')
 
-model_alpha_1 = int(sys.argv[1])
-model_1 = ResModel(input_shape=tuple(sys.argv[2]), num_layers=int(sys.argv[3]), 
-            num_of_res_layers=int(sys.argv[4]), number_of_filters=int(sys.argv[5])).to(device)
+model_alpha_1 = float(sys.argv[1])
+model_1 = ResModel(input_shape=get_input_shape(),  num_layers=get_input_layers(), 
+            num_of_res_layers=int(sys.argv[2]), number_of_filters=int(sys.argv[3])).to(device)
 
 optimizer_1 = torch.optim.Adam(model_1.parameters(), lr=model_alpha_1)
 
-model_alpha_2 = int(sys.argv[1])
-model_2 = ResModel(input_shape=tuple(sys.argv[2]), num_layers=int(sys.argv[3]), 
-            num_of_res_layers=int(sys.argv[4]), number_of_filters=int(sys.argv[5])).to(device)
+model_alpha_2 = float(sys.argv[1])
+model_2 = ResModel(input_shape=get_input_shape(), num_layers=get_input_layers(), 
+            num_of_res_layers=int(sys.argv[2]), number_of_filters=int(sys.argv[3])).to(device)
 
 optimizer_2 = torch.optim.Adam(model_2.parameters(), lr=model_alpha_2)
 
 criterion = nn.MSELoss()
 
-trainer_1 = QLearning(model_1, optimizer_1, criterion)
-trainer_2 = QLearning(model_2, optimizer_2, criterion)
+trainer_1 = MinMaxLearning(model_1, optimizer_1, criterion)
+trainer_2 = MinMaxLearning(model_2, optimizer_2, criterion)
 
-if sys.argv[6] == "EgreedyAgent":
-	player_1 = EgreedyAgent(e_value = int(sys.argv[7]))
-	player_2 = EgreedyAgent(e_value = int(sys.argv[7]))
-elif sys.argv[6] == "GreedyAgent":
+if sys.argv[4] == "EgreedyAgent":
+	player_1 = EgreedyAgent(e_value = float(sys.argv[5]))
+	player_2 = EgreedyAgent(e_value = float(sys.argv[5]))
+elif sys.argv[4] == "GreedyAgent":
 	player_1 = GreedyAgent()
 	player_2 = GreedyAgent()
-elif sys.argv[6] == "RandomAgent":
-	player_1 = RandomAgent()
+elif sys.argv[4] == "RandomAgent":
+	player_1 = RandomAgent() 
 	player_2 = RandomAgent()
 else:
 	print("Wrong agent")
@@ -48,11 +48,11 @@ else:
 
 train({'trainer_1': trainer_1, 'model_1': model_1, 'player_1': player_1,
         'trainer_2': trainer_2, 'model_2': model_2, 'player_2': player_2,
-        'num_games': sys.argv[n-4], 'save_model_every_n_iterations': sys.argv[n-3], 'game_name': sys.argv[n-2],
+        'num_games': int(sys.argv[n-4]), 'save_model_every_n_iterations': int(sys.argv[n-3]), 'model_name': sys.argv[n-2],
         'save_path': sys.argv[n-1]})
 '''
 Kolejność argumentów:
-model_alpha, input_shape, num_layers, num_of_res_layers, number_of_filters, agent, agent_ option, num_games, savae_model_every_n_iterations, game_name, save_path
+model_alpha, num_of_res_layers, number_of_filters, agent, agent_ option, num_games, save_model_every_n_iterations, model_name, save_path
 
 model_1 = ResModel(input_shape=(3, 3), num_layers=66, kernel_size=(3,3), 
             num_of_res_layers=2, padding=(1, 1), 

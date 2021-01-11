@@ -25,7 +25,7 @@ class Res_block(nn.Module):
         out = self.conv1(input_x)
         out = self.batchn1(out)
         out = self.relu(out)
-
+        
         out = self.conv2(out)
         out = self.batchn2(out)
 

@@ -1,6 +1,14 @@
 import rbg_game
 import torch
 import numpy as np
+import os
+
+def get_input_shape():
+    n = int(np.ceil(np.sqrt(rbg_game.board_degree() + 1))) 
+    return (n, n)
+
+def get_input_layers():
+    return rbg_game.board_size() + rbg_game.number_of_variables()
 
 def parse_game_state(state):
 
@@ -35,8 +43,8 @@ def parse_game_state(state):
 
     return torch.tensor(parsed.astype(np.float32))
 
-def save_model(path, game_name, model):
-    torch.save(model.state_dict(), 'MODEL {}'.format(game_name))
+def save_model(path, model_name, model):
+    torch.save(model.state_dict(), os.path.join(path, 'MODEL {}'.format(model_name)))
 
 def load_model(path, model, device):
     model.load_state_dict(torch.load(path, map_location=device))

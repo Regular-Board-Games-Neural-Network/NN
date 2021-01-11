@@ -6,7 +6,7 @@ class EgreedyAgent:
 
     def __init__(self, e_value):        
         
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.device = torch.device('cpu')
         self.e_value = e_value
 
     def choose_action(self, state, model):
