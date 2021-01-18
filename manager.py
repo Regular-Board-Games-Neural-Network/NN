@@ -30,8 +30,8 @@ optimizer_2 = torch.optim.Adam(model_2.parameters(), lr=model_alpha_2)
 
 criterion = nn.MSELoss()
 
-trainer_1 = MinMaxLearning(model_1, optimizer_1, criterion)
-trainer_2 = MinMaxLearning(model_2, optimizer_2, criterion)
+trainer_1 = MonteCarlo(model_1, optimizer_1, criterion)
+trainer_2 = MonteCarlo(model_2, optimizer_2, criterion)
 
 if sys.argv[4] == "EgreedyAgent":
 	player_1 = EgreedyAgent(e_value = float(sys.argv[5]))
