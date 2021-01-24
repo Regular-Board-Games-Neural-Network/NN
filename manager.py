@@ -2,11 +2,11 @@ import sys
 import torch
 import torch.nn as nn
 from train import train
+from test impor test
 from models.resnet import ResModel
 from agents.egreedy_agent import EgreedyAgent
 from agents.greedy_agent import GreedyAgent
 from training_methods.monte_carlo import MonteCarlo
-from training_methods.minmax import MinMaxLearning
 from model_utilis import *
 
 n = len(sys.argv)
@@ -14,7 +14,7 @@ if n != 10 and n != 9:
 	print("error: wrong number of arguments -- {0} :(".format(n))
 	exit()
 
-device = torch.device('cpu')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 model_alpha_1 = float(sys.argv[1])
 model_1 = ResModel(input_shape=get_input_shape(),  num_layers=get_input_layers(), 
