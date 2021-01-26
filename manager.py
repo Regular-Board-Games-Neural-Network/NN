@@ -9,6 +9,8 @@ from agents.greedy_agent import GreedyAgent
 from training_methods.monte_carlo import MonteCarlo
 from model_utilis import *
 
+#test
+
 n = len(sys.argv)
 if n != 10 and n != 9:
 	print("error: wrong number of arguments -- {0} :(".format(n))
