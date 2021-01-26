@@ -1,4 +1,4 @@
-import sys
+import argparse
 import torch
 import torch.nn as nn
 from train import train
@@ -9,24 +9,39 @@ from agents.greedy_agent import GreedyAgent
 from training_methods.monte_carlo import MonteCarlo
 from model_utilis import *
 
-#test
+parser = argparse.ArgumentParser(description='Parser')
+parser.add_argument('model_alpha', metavar=1, type=float, required=True,
+                    help='model_alpha')
+parser.add_argument('num_of_res_layers', metavar=1, type=int, required=True,
+                    help='num_of_res_layers')                    
+parser.add_argument('number_of_filters', metavar=1, type=int, required=True,
+                    help='number_of_filters')
+parser.add_argument('agent', metavar=1, required=True,
+                    help='agent of choice')
+parser.add_argument('num_games', metavar=1, type=int, required=True,
+                    help='num_games')
+parser.add_argument('save_model_every_n_iterations', metavar=1, type=int, required=True,
+                    help='save_model_every_n_iterations')
+parser.add_argument('model_name', metavar=1, required=True,
+                    help='model_name')
+parser.add_argument('save_path', metavar=1, required=True,
+                    help='save_path')
+parser.add_argument('-opt', type=float, metavar=1,
+                    help='Argument for agent, to activate write: -opt arg')
 
-n = len(sys.argv)
-if n != 10 and n != 9:
-	print("error: wrong number of arguments -- {0} :(".format(n))
-	exit()
+args = parser.parse_args()
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-model_alpha_1 = float(sys.argv[1])
+model_alpha_1 = args.model_alpha[0]
 model_1 = ResModel(input_shape=get_input_shape(),  num_layers=get_input_layers(), 
-            num_of_res_layers=int(sys.argv[2]), number_of_filters=int(sys.argv[3])).to(device)
+            num_of_res_layers=args.num_of_res_layers[0], number_of_filters=args.number_of_filters[0]).to(device)
 
 optimizer_1 = torch.optim.Adam(model_1.parameters(), lr=model_alpha_1)
 
-model_alpha_2 = float(sys.argv[1])
+model_alpha_2 = args.model_alpha[0]
 model_2 = ResModel(input_shape=get_input_shape(), num_layers=get_input_layers(), 
-            num_of_res_layers=int(sys.argv[2]), number_of_filters=int(sys.argv[3])).to(device)
+            num_of_res_layers=args.num_of_res_layers[0], number_of_filters=args.number_of_filters[0]).to(device)
 
 optimizer_2 = torch.optim.Adam(model_2.parameters(), lr=model_alpha_2)
 
@@ -35,13 +50,13 @@ criterion = nn.MSELoss()
 trainer_1 = MonteCarlo(model_1, optimizer_1, criterion)
 trainer_2 = MonteCarlo(model_2, optimizer_2, criterion)
 
-if sys.argv[4] == "EgreedyAgent":
-	player_1 = EgreedyAgent(e_value = float(sys.argv[5]))
-	player_2 = EgreedyAgent(e_value = float(sys.argv[5]))
-elif sys.argv[4] == "GreedyAgent":
+if args.agent[0] == "EgreedyAgent":
+	player_1 = EgreedyAgent(e_value = args.opt)
+	player_2 = EgreedyAgent(e_value = args.opt)
+elif args.agent[0] == "GreedyAgent":
 	player_1 = GreedyAgent()
 	player_2 = GreedyAgent()
-elif sys.argv[4] == "RandomAgent":
+elif args.agent[0] == "RandomAgent":
 	player_1 = RandomAgent() 
 	player_2 = RandomAgent()
 else:
@@ -50,8 +65,8 @@ else:
 
 train({'trainer_1': trainer_1, 'model_1': model_1, 'player_1': player_1,
         'trainer_2': trainer_2, 'model_2': model_2, 'player_2': player_2,
-        'num_games': int(sys.argv[n-4]), 'save_model_every_n_iterations': int(sys.argv[n-3]), 'model_name': sys.argv[n-2],
-        'save_path': sys.argv[n-1]})
+        'num_games': args.num_games[0], 'save_model_every_n_iterations': args.save_model_every_n_iterations[0], 'model_name': args.model_name[0],
+        'save_path': args.save_path[0]})
 '''
 Kolejność argumentów:
 model_alpha, num_of_res_layers, number_of_filters, agent, agent_ option, num_games, save_model_every_n_iterations, model_name, save_path
