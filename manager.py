@@ -75,7 +75,7 @@ else:
     player_2 = RandomAgent()
 
 if args.load_1:
-    model_1 = load_model(args.load_model_1, model_2, device)
+    model_1 = load_model(args.load_model_1, model_1, device)
 
 if args.load_2:
     model_2 = load_model(args.load_model_2, model_2, device)
@@ -90,27 +90,3 @@ if args.mode == 'Train':
 else:
     test({'model_1': model_1, 'player_1': player_1, 'model_2': model_2, 'player_2': player_2,
           'num_games': args.num_games})
-'''
-Kolejność argumentów:
-model_alpha, num_of_res_layers, number_of_filters, agent, agent_ option, num_games, save_model_every_n_iterations, model_name, save_path
-
-model_1 = ResModel(input_shape=(3, 3), num_layers=66, kernel_size=(3,3),
-            num_of_res_layers=2, padding=(1, 1),
-            number_of_filters=256).to(device)
-
-model_1 = load_model(
-    '/mnt/c/Users/zobni/Programming/NN/data/model/NN1VSNN2_(3, 3)_66_2_256.zip', model_1, device)
-
-model_2 = ResModel(input_shape=(3, 3), num_layers=66, kernel_size=(3,3),
-            num_of_res_layers=2, padding=(1, 1),
-            number_of_filters=256).to(device)
-
-model_2 = load_model(
-    '/mnt/c/Users/zobni/Programming/NN/data/model/NN1VSNN1_(3, 3)_66_2_256.zip', model_2, device)
-
-player_1 = GreedyAgent()
-player_2 = GreedyAgent()
-
-test({ 'model_1': model_1, 'player_1': player_1, 'model_2': model_2, 'player_2': player_2,
-       'num_games': 30})
-'''
