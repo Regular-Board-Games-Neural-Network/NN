@@ -64,27 +64,31 @@ if args.agent_1 == "EgreedyAgent":
     player_1 = EgreedyAgent(e_value=args.opt)
 elif args.agent_1 == "GreedyAgent":
     player_1 = GreedyAgent()
-else:
+elif args.agent_1 == "RandomAgent":
     player_1 = RandomAgent()
+else:
+    print("wrong agent")
 
 if args.agent_2 == "EgreedyAgent":
     player_2 = EgreedyAgent(e_value=args.opt)
 elif args.agent_2 == "GreedyAgent":
     player_2 = GreedyAgent()
-else:
+elif args.agent_2 == "RandomAgent":
     player_2 = RandomAgent()
+else:
+    print("wrong agent")
 
 if args.load_1:
-    model_1 = load_model(args.load_model_1, model_1, device)
+    model_1 = load_model(args.load_1, model_1, device)
 
 if args.load_2:
-    model_2 = load_model(args.load_model_2, model_2, device)
+    model_2 = load_model(args.load_2, model_2, device)
 
 
 if args.mode == 'Train':
     train({'trainer_1': trainer_1, 'model_1': model_1, 'player_1': player_1,
            'trainer_2': trainer_2, 'model_2': model_2, 'player_2': player_2,
-           'num_games': args.num_games, 'save_model_every_n_iterations': args.save_model_every_n_iterations, 'model_name': args.model_name[0],
+           'num_games': args.num_games, 'save_model_every_n_iterations': args.save_model_every_n_iterations, 'model_name': args.model_name,
            'save_path': args.save_path})
 
 else:
