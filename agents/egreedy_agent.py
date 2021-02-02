@@ -23,7 +23,7 @@ class EgreedyAgent:
         
         values = model(torch.cat(boards, 0).to(self.device))
         
-        if torch.rand(1) < self.e_value:
+        if torch.rand(1) > self.e_value:
             id = torch.argmax(values)
         else:
             id = torch.randperm(len(values))[:1][0]
