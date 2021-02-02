@@ -30,7 +30,7 @@ def main():
     player_policy = EgreedyAgent(e_value=0.02)
 
     #load model
-    load_model('data/model/RANDOM_(3, 3)_66_2_256.zip', model, device)
+    load_model('data/model/Reversi_2_256.zip', model, device)
     
     moves = state.Moves()
 
