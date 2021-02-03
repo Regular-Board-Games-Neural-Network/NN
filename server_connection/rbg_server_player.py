@@ -9,7 +9,6 @@ import sys
 import torch
  
 def main():
-
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     parser = argparse.ArgumentParser()
@@ -43,8 +42,12 @@ def main():
         else:
             move = client.Read()
             state.Apply(move)
-        
         moves = state.Moves()
+        if not moves:
+            client.ReadReset()
+            state.Reset()
+            moves = state.Moves()
+
 
 if __name__=="__main__":
     main()
